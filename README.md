@@ -78,3 +78,13 @@ patches/                  eigene Patches (gehen als MR an UBports)
   **kein qtcontacts-sqlite** -> ohne unseren Patch würde lomiri-obex-call-data ins Leere lesen
 - Nächster Schritt: Ausgangsmessung mit den Original-Paketen (Laptop-Test + Mitschnitt im Leon),
   danach unsere Pakete installieren und dieselbe Messung wiederholen
+
+## Messung 1 (2026-11-04): Laptop als PCE gegen das Poco
+- **Originalpakete:** Session ok, `pb` -> `Internal Server Error`, `ich/och/mch/cch` -> `Not Found`
+  (phonebook-ebook findet kein Evolution-Adressbuch) => das ist der Fehler, den auch das Auto sieht
+- **unser lomiri-obex-call-data (ohne root, von Hand gestartet):** Backend-Auswahl greift
+  (`available: invalid, galera, memory` -> `galera`), `Count` = 174 Kontakte, `Fetch` liefert
+  gültige vCard 2.1 (`N`, `FN`, `TEL;CELL`), Anrufliste `cch` = 6
+- Auffällig: galera kann nicht nach DisplayLabel sortieren -> Reihenfolge unsortiert (das Auto sortiert
+  selbst, ggf. später nach QContactName sortieren)
+- Nächster Schritt: bluez-obexd mit Lomiri-Plugin installieren (braucht sudo-PIN), Messung wiederholen
