@@ -88,3 +88,15 @@ patches/                  eigene Patches (gehen als MR an UBports)
 - Auffällig: galera kann nicht nach DisplayLabel sortieren -> Reihenfolge unsortiert (das Auto sortiert
   selbst, ggf. später nach QContactName sortieren)
 - Nächster Schritt: bluez-obexd mit Lomiri-Plugin installieren (braucht sudo-PIN), Messung wiederholen
+
+## Messung 2 (2026-11-04): mit unseren Paketen – Laptop als PCE
+- **Erfolg:** `pb` 174 Kontakte (List + PullAll vCard 2.1 + Pull einzeln), `ich` 3, `och` 3, `mch` 0, `cch` 6
+- Umlaute korrekt als `CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE` (N, FN, ADR)
+- **Wichtig – Trust:** Ist das Gegenüber auf dem Telefon `Trusted: no`, hängt die PBAP-Verbindung in bluetoothd
+  (Autorisierung ohne Antwort) und bluetoothd nimmt danach auf RFCOMM-Kanal 15 nichts mehr an
+  (`Connection refused`), bis Bluetooth aus/an geschaltet wird. Abhilfe vorerst:
+  `adb shell bluetoothctl trust <MAC>`, danach Bluetooth aus/an. Für das Auto ebenso nach dem Koppeln.
+  -> eigener Fix nötig (Lomiri-Agent / bluetoothd), Upstream-Issue
+- Offene Punkte fürs MIB2: keine Owner-Card `0.vcf` (Liste beginnt bei `1.vcf`), 107 `TEL` ohne Typ,
+  1x `TEL;ENCODING=QUOTED-PRINTABLE`, PBAP-SDP-Version 1.1 (RFCOMM, kein L2CAP/1.2)
+- Reparatur nach dem ersten Installationsversuch: siehe `scripts/phone-repair.sh` (Commit-Log)
