@@ -2,3 +2,5 @@ upstream/*/
 analysis/captures/
 __pycache__/
 debs/
+analysis/phone-status-*.txt
+analysis/versions-before-install.txt
