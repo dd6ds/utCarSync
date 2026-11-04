@@ -1,5 +1,14 @@
 # Was ich von dir brauche
 
+## Antworten (2026-11-04)
+- Testgerät: Xiaomi Poco X3 Pro (vayu)
+- Root-Dateisystem beschreibbar machen: ja
+- Auto: SEAT Leon, Baujahr 2019, MIB2 Standard (Technisat)
+- Android-Referenzgerät: keins vorhanden -> Referenz ist der Laptop-Test (`laptop-pbap-test.py`)
+- Upstream zu UBports + GitHub-Repo dd6ds/utCarSync: ja
+
+Noch offen: UT-Version auf dem Poco (liest `phone-status.sh` aus), Fotos vom Telefonmenü im Leon, Mitschnitt im Auto.
+
 ## 1. Telefon (vor dem ersten Test)
 - [ ] Welches Gerät ist das Testgerät? (Poco X3 Pro, Redmi Note 8 Pro, S22/S23, ...)
 - [ ] UT-Version und Kanal: Einstellungen > Info (z. B. 24.04-1.2 stable / 24.04-2 devel)

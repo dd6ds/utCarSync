@@ -50,14 +50,22 @@ scripts/
   phone-status.sh           prüft per adb: BlueZ/obexd/PBAP-SDP/D-Bus-Dienst
   phone-btsnoop.sh          startet btmon auf dem Telefon, holt .btsnoop
   laptop-pbap-test.py       Laptop spielt "Auto" (PCE) und lädt das Telefonbuch
+  phone-install.sh          installiert die CI-Pakete auf dem Telefon (+ --rollback)
+patches/                  eigene Patches (gehen als MR an UBports)
+.github/workflows/        arm64-Build der .deb-Pakete
 ```
 
 ## Status
 
 - [x] Projekt angelegt, Upstream-Stand recherchiert
-- [ ] Infos von Dennis (siehe `docs/INFOS-VON-DENNIS.md`)
-- [ ] Ist-Zustand des Telefons erfassen (`scripts/phone-status.sh`)
+- [x] Infos von Dennis: Poco X3 Pro, SEAT Leon 2019, rw erlaubt, upstream ja
+- [x] Fund: lomiri-obex-call-data liest nur qtcontacts-sqlite, auf 24.04-1.x liegen die
+      Kontakte aber im address-book-service (galera) -> Patch
+      `patches/lomiri-obex-call-data/0001-*.patch` (Backend-Auswahl zur Laufzeit)
+- [x] CI: `.github/workflows/build.yml` baut bluez-obexd + lomiri-obex-call-data
+      für arm64, je für 24.04-1.x (bluez 5.72) und 24.04-2.x (bluez 5.85)
+- [ ] Ist-Zustand des Poco erfassen (`scripts/phone-status.sh`)
+- [ ] Pakete installieren (`scripts/phone-install.sh <ordner>`), Rückweg: `--rollback`
 - [ ] PBAP gegen den Laptop testen (ohne Auto)
-- [ ] bluez-obexd mit Patch und lomiri-obex-call-data für arm64 / 24.04-2 bauen
 - [ ] Test im Auto mit btsnoop-Mitschnitt
 - [ ] Fehler beheben, Patches upstream (UBports MR)

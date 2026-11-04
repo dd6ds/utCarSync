@@ -1,0 +1,83 @@
+name: build-debs
+
+# Baut bluez-obexd (mit Lomiri-PBAP-Plugin) und lomiri-obex-call-data
+# (mit Backend-Auswahl-Patch) nativ für arm64, je UT-Basis.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [".github/workflows/**", "patches/**"]
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm
+    container: ubuntu:24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ut: "24.04-1.x"   # bluez 5.72
+            bluez_branch: personal/lduboeuf/add_lomiri_phonebook
+          - ut: "24.04-2.x"   # bluez 5.85
+            bluez_branch: ubports/latest
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      DEBEMAIL: dd6ds@eclipso.de
+      DEBFULLNAME: dd6ds
+      DEB_BUILD_OPTIONS: nocheck
+    steps:
+      - name: Werkzeuge + UBports-Repo
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl gnupg git \
+            devscripts equivs build-essential fakeroot quilt
+          install -d /etc/apt/keyrings
+          curl -fsSL https://repo2.ubports.com/keyring.gpg -o /etc/apt/keyrings/ubports.gpg
+          echo "deb [signed-by=/etc/apt/keyrings/ubports.gpg] https://repo2.ubports.com/ ${{ matrix.ut }} main" \
+            > /etc/apt/sources.list.d/ubports.list
+          printf 'Package: *\nPin: origin repo2.ubports.com\nPin-Priority: 1001\n' > /etc/apt/preferences.d/ubports.pref
+          apt-get update
+
+      - uses: actions/checkout@v4
+        with: { path: utcarsync }
+
+      - name: bluez-obexd bauen
+        run: |
+          git clone --depth 1 -b "${{ matrix.bluez_branch }}" \
+            https://gitlab.com/ubports/development/core/packaging/bluez.git bluez
+          cd bluez
+          mk-build-deps -i -r -t "apt-get -y --no-install-recommends" debian/control
+          dch --local "+utcarsync" "utCarSync build (${{ matrix.ut }}, ${{ matrix.bluez_branch }})"
+          dpkg-buildpackage -b -uc -us -j"$(nproc)"
+
+      - name: lomiri-obex-call-data bauen
+        run: |
+          git clone https://gitlab.com/ubports/development/core/lomiri-obex-call-data.git locd
+          cd locd
+          git -c user.name=dd6ds -c user.email=dd6ds@eclipso.de am ../utcarsync/patches/lomiri-obex-call-data/*.patch
+          mk-build-deps -i -r -t "apt-get -y --no-install-recommends" debian/control
+          dch --local "+utcarsync" "utCarSync build (${{ matrix.ut }}) with runtime backend selection"
+          dpkg-buildpackage -b -uc -us -j"$(nproc)"
+
+      - name: Pakete sammeln
+        run: |
+          mkdir -p out
+          cp bluez-obexd_*_arm64.deb lomiri-obex-call-data_*_arm64.deb out/
+          ls -l out
+          dpkg-deb -c out/bluez-obexd_*.deb | grep -E 'obexd$|\.service'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: utcarsync-${{ matrix.ut }}-arm64
+          path: out/*.deb
+
+      - name: An Release anhängen
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.deb

@@ -1,6 +1,6 @@
 # VAG MIB2 Standard (Technisat) – Notizen
 
-Gerät von Dennis:
+Gerät von Dennis: SEAT Leon, Baujahr 2019
 - Software `MST2_EU_SE_ZR_P0516T`, HW `H50`, SW/MU `0516`, Codec `5001.0.0.2`
 - HMI `H29.344.66_STD2Plus_EU`, Model `GuideModel_29.344.12`, Base `H29.344.66-201906171929`
 - Hersteller Technisat -> „MIB2 Standard / Composition Media/Colour“ (Plattform Seat/Skoda/VW, Firmware 0516 vom Juni 2019)
