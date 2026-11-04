@@ -100,3 +100,8 @@ patches/                  eigene Patches (gehen als MR an UBports)
 - Offene Punkte fürs MIB2: keine Owner-Card `0.vcf` (Liste beginnt bei `1.vcf`), 107 `TEL` ohne Typ,
   1x `TEL;ENCODING=QUOTED-PRINTABLE`, PBAP-SDP-Version 1.1 (RFCOMM, kein L2CAP/1.2)
 - Reparatur nach dem ersten Installationsversuch: siehe `scripts/phone-repair.sh` (Commit-Log)
+
+## Upstream (2026-11-04)
+- MR lomiri-obex-call-data!3 (Backend-Fallback): https://gitlab.com/ubports/development/core/lomiri-obex-call-data/-/merge_requests/3
+- Issue bluez#5 (Hänger bei nicht vertrauenswürdigem Gerät): https://gitlab.com/ubports/development/core/packaging/bluez/-/work_items/5
+- Testbericht als Kommentar bei bluez MR !8: https://gitlab.com/ubports/development/core/packaging/bluez/-/merge_requests/8
