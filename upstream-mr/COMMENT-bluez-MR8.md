@@ -5,7 +5,7 @@ Test report: works in a car 🎉
 - Device: Xiaomi Poco X3 Pro (vayu), `24.04-2.x/arm64/android9plus/stable`
 - `bluez-obexd` built from `ubports/latest` (5.85-4ubports1, `--with-phonebook=lomiri`) for arm64
 - `lomiri-obex-call-data` from `main` plus a fallback to the galera backend
-  (patches: lomiri-obex-call-data#<ISSUE-NUMMER EINTRAGEN>). Without it the phonebook stays empty
+  (lomiri-obex-call-data!3). Without it the phonebook stays empty
   on 24.04-2 stable, because the contacts are still in address-book-service.
 
 Results:
