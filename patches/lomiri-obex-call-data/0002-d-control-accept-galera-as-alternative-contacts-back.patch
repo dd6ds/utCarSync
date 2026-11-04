@@ -1,4 +1,4 @@
-From 58af726512d17ad64fc0d3f54d15ce207957dc49 Mon Sep 17 00:00:00 2001
+From b056db334225754509c499b43fbe5cb1903595eb Mon Sep 17 00:00:00 2001
 From: dd6ds <dd6ds@eclipso.de>
 Date: Wed, 4 Nov 2026 07:43:26 +0100
 Subject: [PATCH 2/2] d/control: accept galera as alternative contacts backend

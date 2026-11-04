@@ -1,0 +1,44 @@
+From d700656e29757f122bb40bc52839b15ca9014689 Mon Sep 17 00:00:00 2001
+From: dd6ds <dd6ds@eclipso.de>
+Date: Wed, 4 Nov 2026 11:56:03 +0100
+Subject: [PATCH 1/2] contactsservice: honour LOMIRI_CONTACT_BACKEND
+
+The service always opened the org.nemomobile.contacts.sqlite backend.
+On devices where the user's contacts are still stored in
+address-book-service (galera), e.g. Ubuntu Touch 24.04-2.x stable,
+PBAP clients (car kits) therefore received an empty phonebook.
+
+Use the session-wide LOMIRI_CONTACT_BACKEND variable (set by
+ubuntu-touch-pim-settings, available in the systemd user environment
+the service is activated from) and fall back to qtcontacts-sqlite.
+
+Tested on a Xiaomi Poco X3 Pro (vayu), 24.04-2.x stable
+(LOMIRI_CONTACT_BACKEND=galera, 174 contacts): obexd PBAP works from a
+BlueZ PCE (laptop) and from a SEAT Leon (2019, VW MIB2 Standard by
+Technisat): contacts are browsable in the car and incoming calls show
+the caller's name.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01PCCLepF6vdmVFK5L6Hvm95
+---
+ src/contactsservice.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/contactsservice.cpp b/src/contactsservice.cpp
+index 6a222dd..b424ed0 100644
+--- a/src/contactsservice.cpp
++++ b/src/contactsservice.cpp
+@@ -37,8 +37,9 @@ static const char *DEFAULT_BACKEND_NAME = "org.nemomobile.contacts.sqlite";
+ ContactsService::ContactsService(VersionStateStore &store, QObject *parent)
+     : QObject(parent)
+     , mStateStore(store)
+-    , mManager(DEFAULT_BACKEND_NAME)
++    , mManager(qEnvironmentVariable("LOMIRI_CONTACT_BACKEND", QString::fromLatin1(DEFAULT_BACKEND_NAME)))
+ {
++    qDebug() << "using contacts backend" << mManager.managerName();
+ }
+ 
+ uint ContactsService::Count(uint &count)
+-- 
+2.43.0
+
