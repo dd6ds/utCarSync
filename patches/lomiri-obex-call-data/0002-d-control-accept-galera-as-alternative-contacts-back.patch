@@ -1,0 +1,31 @@
+From 58af726512d17ad64fc0d3f54d15ce207957dc49 Mon Sep 17 00:00:00 2001
+From: dd6ds <dd6ds@eclipso.de>
+Date: Wed, 4 Nov 2026 07:43:26 +0100
+Subject: [PATCH 2/2] d/control: accept galera as alternative contacts backend
+
+With the runtime backend selection the service works with either
+qtcontacts-sqlite or the galera (address-book-service) backend, so do
+not force qtcontacts-sqlite onto devices that only use galera.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01PCCLepF6vdmVFK5L6Hvm95
+---
+ debian/control | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/debian/control b/debian/control
+index 333e0f5..1c7e0f4 100644
+--- a/debian/control
++++ b/debian/control
+@@ -22,7 +22,7 @@ Architecture: any
+ Multi-Arch: same
+ Depends:
+  bluez-obexd,
+- libqt5contact5-plugin-sqlite,
++ libqt5contact5-plugin-sqlite | qtcontact5-galera,
+  liblomirihistoryservice0,
+  ${shlibs:Depends},
+  ${misc:Depends},
+-- 
+2.43.0
+

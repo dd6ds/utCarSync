@@ -1,12 +1,27 @@
-From e1666f3e49996be02bc37aabfe9ecf73d4c12dae Mon Sep 17 00:00:00 2001
+From 73daef04e80167e112450b58309440d529e198ee Mon Sep 17 00:00:00 2001
 From: dd6ds <dd6ds@eclipso.de>
-Date: Wed, 4 Nov 2026 06:51:25 +0100
-Subject: [PATCH] contactsservice: select contacts backend at runtime
+Date: Wed, 4 Nov 2026 07:43:26 +0100
+Subject: [PATCH 1/2] contactsservice: select contacts backend at runtime
 
-Fall back to the galera (address-book-service) backend when
-qtcontacts-sqlite is not installed or empty, so PBAP works on
-24.04-1.x devices where contacts still live in address-book-service.
-The backend can be forced with LOMIRI_OBEX_CONTACTS_BACKEND.
+The service always opened the org.nemomobile.contacts.sqlite backend.
+On devices where the user's contacts are stored in address-book-service
+(galera backend), e.g. Ubuntu Touch 24.04-2.x stable, the backend is
+either not installed or empty, so PBAP clients (car kits) received an
+empty phonebook.
+
+Pick the backend when the service starts:
+ 1. $LOMIRI_OBEX_CONTACTS_BACKEND, if set
+ 2. qtcontacts-sqlite, if installed and not empty
+ 3. galera, if installed
+ 4. qtcontacts-sqlite as last resort
+
+Tested on a Xiaomi Poco X3 Pro (vayu), 24.04-2.x stable, 174 contacts
+in galera: obexd PBAP PullAll/List/Pull work from a BlueZ PCE (laptop)
+and from a SEAT Leon (2019, VW MIB2 Standard by Technisat): contacts
+are browsable in the car and incoming calls show the caller's name.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01PCCLepF6vdmVFK5L6Hvm95
 ---
  src/contactsservice.cpp | 35 ++++++++++++++++++++++++++++++++++-
  1 file changed, 34 insertions(+), 1 deletion(-)
