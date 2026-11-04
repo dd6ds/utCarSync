@@ -4,7 +4,7 @@
 
 # Title
 
-contactsservice: fall back to galera when qtcontacts-sqlite is missing or empty
+contactsservice: honour LOMIRI_CONTACT_BACKEND (fixes empty phonebook on galera devices)
 
 # Description
 
@@ -18,15 +18,10 @@ plugin, bluez MR !8) sends an empty phonebook to car kits.
 
 ## Change
 
-1. `contactsservice: select contacts backend at runtime`
-   The backend is chosen when the service starts:
-   1. `$LOMIRI_OBEX_CONTACTS_BACKEND`, if set (for debugging/testing)
-   2. `org.nemomobile.contacts.sqlite`, if installed **and** it contains contacts
-   3. `galera`, if installed
-   4. `org.nemomobile.contacts.sqlite` as last resort (previous behaviour)
-
-   The chosen backend is logged. Nothing changes on devices that already use
-   qtcontacts-sqlite.
+1. `contactsservice: honour LOMIRI_CONTACT_BACKEND`
+   Use the session-wide `LOMIRI_CONTACT_BACKEND` variable (set by ubuntu-touch-pim-settings and present
+   in the systemd user environment the service is activated from), with qtcontacts-sqlite as default.
+   The chosen backend is logged.
 
 2. `d/control: accept galera as alternative contacts backend`
    `Depends: libqt5contact5-plugin-sqlite | qtcontact5-galera`, so the package can
@@ -41,7 +36,7 @@ Packages: `bluez-obexd` built from `ubports/latest` (5.85, with
 
 | Test | Before (stock 24.04-2) | With bluez MR !8 + this MR |
 |---|---|---|
-| `com.lomiri.Contacts.Count` | backend sqlite: 0 | 174 (`using contacts backend "galera"`) |
+| `com.lomiri.Contacts.Count` | backend sqlite: 0 | 174 (`LOMIRI_CONTACT_BACKEND=galera`, `using contacts backend "galera"`) |
 | PBAP PCE on a Linux laptop (`org.bluez.obex.PhonebookAccess1`): `pb` GetSize / List / PullAll(vcard21) / Pull | `Internal Server Error` | 174 / 174 / 174 vCards / ok |
 | `ich` / `och` / `mch` / `cch` | `Not Found` | 3 / 3 / 0 / 6 |
 | Umlauts in vCard 2.1 | – | `N;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE` ok |
