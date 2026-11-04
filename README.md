@@ -69,3 +69,12 @@ patches/                  eigene Patches (gehen als MR an UBports)
 - [ ] PBAP gegen den Laptop testen (ohne Auto)
 - [ ] Test im Auto mit btsnoop-Mitschnitt
 - [ ] Fehler beheben, Patches upstream (UBports MR)
+
+## Ist-Zustand Poco X3 Pro (2026-11-04, `analysis/phone-status-*.txt`)
+- Kanal `24.04-2.x/arm64/android9plus/stable`, bluez/obexd 5.85 -> passende Pakete: `debs/utcarsync-24.04-2.x-arm64/`
+- obexd läuft (`-P ftp,irmc,mas,pcsuite`), **PBAP-Server-SDP (0x112F) ist schon da**,
+  aber mit dem Backend `phonebook-ebook` (Evolution-Data-Server), nicht mit `lomiri`
+- Kontakte-Backend auf dem Gerät: nur `qtcontact5-galera` (address-book-service),
+  **kein qtcontacts-sqlite** -> ohne unseren Patch würde lomiri-obex-call-data ins Leere lesen
+- Nächster Schritt: Ausgangsmessung mit den Original-Paketen (Laptop-Test + Mitschnitt im Leon),
+  danach unsere Pakete installieren und dieselbe Messung wiederholen

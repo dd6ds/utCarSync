@@ -1,0 +1,120 @@
+
+===== System =====
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+VERSION_ID="24.04"
+Linux ubuntu-phablet 4.14.190-halium #1 SMP PREEMPT Mon Oct 19 18:08:10 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+[service]
+base: system-image.ubports.com
+http_port: 80
+https_port: 443
+channel: 24.04-2.x/arm64/android9plus/stable
+device: vayu
+current build number: 0
+device name: vayu
+channel: 24.04-2.x/arm64/android9plus/stable
+last update: 2078-08-18 06:45:38
+
+===== Pakete =====
+bluez 5.85-4ubports1+0~20260518172433.7+ubports24.04.2~1.gbp60bb89
+bluez-obexd 5.85-4ubports1+0~20260518172433.7+ubports24.04.2~1.gbp60bb89
+libbluetooth3:arm64 5.85-4ubports1+0~20260518172433.7+ubports24.04.2~1.gbp60bb89
+libofono-qt1:arm64 1.30-0ubports2+0~20260320083617.4+ubports24.04.2~1.gbpac79c6
+libofonobinderpluginext 1.1.33-0ubports1+0~20260917165048.4+ubports24.04.2~1.gbp33c120
+libopenobex2 1.7.2-2.2
+libqofono-qt5-0:arm64 0.130-1ubports1+0~20260530141724.3+ubports24.04.2~1.gbp6fd994
+lomiri-address-book-service:arm64 0.2.0~20260519211227.122~a121017+ubports24.04.2
+lomiri-address-book-updater:arm64 0.2.0~20260519211227.122~a121017+ubports24.04.2
+lomiri-history-service 0.6.1~20260828090312.1~5b8d741+ubports24.04.2
+nuntium 2.2~20250821145130.16~50804a6+ubports~dev
+ofono-binder-plugin 1.1.33-0ubports1+0~20260917165048.4+ubports24.04.2~1.gbp33c120
+ofono-binder-plugin-ext-mtk 0.7.0-0ubports1~20260917164959.2~c3773b2+ubports24.04.2
+ofono-binder-plugin-ext-qti 0.0.1-0ubports1~20261023134024.3~b63b0c6+ubports24.04.2
+ofono-ril-binder-plugin 1.2.8-0ubports1~20260413213608.7~6bb46fe+ubports24.04.2
+ofono-ril-plugin 1.0.7-0ubports1+0~20260315060616.3+ubports24.04.2~1.gbp40b732
+ofono-sailfish 1.29+git12-0ubports1~20260512073109.25~cc444e3+ubports24.04.2
+ofono-sailfish-apndb-plugin:arm64 0.20230719~20260330221020.5~8585296+ubports24.04.2
+ofono-sailfish-scripts 1.29+git12-0ubports1~20260512073109.25~cc444e3+ubports24.04.2
+qml-module-ofono:arm64 0.130-1ubports1+0~20260530141724.3+ubports24.04.2~1.gbp6fd994
+qml-module-qtcontacts:arm64 5.0~git20201102.f9a8f0fc+dfsg1-6~ubports24.04.1+0~20260831094634.2+ubports24.04.2~1.gbp92702c
+qtcontact5-galera:arm64 0.2.0~20260519211227.122~a121017+ubports24.04.2
+telepathy-ofono 0.3.1+0~20260701211932.2+ubports24.04.2~1.gbp817a89
+telepathy-ofono-on-ring-ril-mc-plugin 0.3.1+0~20260701211932.2+ubports24.04.2~1.gbp817a89
+
+===== obexd-Binary =====
+/usr/libexec/bluetooth/obexd
+GetPhonebook
+InvalidPhonebook
+__obex_builtin_pbap
+obexd/client/pbap.c
+obexd/plugins/pbap.c
+obexd/plugins/phonebook-ebook.c
+org.bluez.obex.PhonebookAccess1
+pbap
+PBAP
+pbap_exit
+pbap_exit_cb
+pbap_get
+pbap_init
+pbap_init_cb
+pbap_probe
+pbap_remove
+pbap_setpath
+phonebook
+Phonebook Access
+Phonebook Access Client
+
+===== Prozesse =====
+   1856 radio    /usr/sbin/ofonod -P stktest,sap,udev,dun,smart,hfp,hfp_bluez5,provision,ril --nodetach
+   3446 root     /usr/libexec/bluetooth/bluetoothd
+   4017 phablet  /usr/lib/telepathy/telepathy-ofono
+   4650 phablet  /usr/libexec/bluetooth/obexd -P ftp,irmc,mas,pcsuite -r /home/phablet
+
+===== systemd --user obex =====
+● obex.service - Bluetooth OBEX service
+     Loaded: loaded (/usr/lib/systemd/user/obex.service; enabled; preset: enabled)
+    Drop-In: /usr/lib/systemd/user/obex.service.d
+             └─ubuntu-touch-session.conf
+     Active: active (running) since Mon 1975-01-13 17:52:52 CET; 51 years 9 months ago
+   Main PID: 4650 (obexd)
+      Tasks: 7 (limit: 8578)
+     Memory: 3.4M ()
+     CGroup: /user.slice/user-32011.slice/user@32011.service/app.slice/obex.service
+             └─4650 /usr/libexec/bluetooth/obexd -P ftp,irmc,mas,pcsuite -r /home/phablet
+
+Jan 13 17:52:52 ubuntu-phablet systemd[3357]: Starting obex.service - Bluetooth OBEX service...
+Jan 13 17:52:52 ubuntu-phablet obexd[4650]: OBEX daemon 5.85
+Jan 13 17:52:52 ubuntu-phablet obexd[4650]: Excluding pcsuite
+Jan 13 17:52:52 ubuntu-phablet systemd[3357]: Started obex.service - Bluetooth OBEX service.
+
+===== Adapter-UUIDs =====
+	Name: Xiaomi Poco X3 Pro
+	Powered: yes
+	Discoverable: no
+	DiscoverableTimeout: 0x000000b4 (180)
+	UUID: Headset AG                (00001112-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control        (0000110e-0000-1000-8000-00805f9b34fb)
+	UUID: Audio Source              (0000110a-0000-1000-8000-00805f9b34fb)
+	UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+	UUID: PnP Information           (00001200-0000-1000-8000-00805f9b34fb)
+	UUID: A/V Remote Control Target (0000110c-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Access Profile    (00001800-0000-1000-8000-00805f9b34fb)
+	UUID: Message Notification Se.. (00001133-0000-1000-8000-00805f9b34fb)
+	UUID: Generic Attribute Profile (00001801-0000-1000-8000-00805f9b34fb)
+	UUID: Dialup Networking         (00001103-0000-1000-8000-00805f9b34fb)
+	UUID: Device Information        (0000180a-0000-1000-8000-00805f9b34fb)
+	UUID: Handsfree Audio Gateway   (0000111f-0000-1000-8000-00805f9b34fb)
+	UUID: Phonebook Access Client   (0000112e-0000-1000-8000-00805f9b34fb)
+	UUID: OBEX Object Push          (00001105-0000-1000-8000-00805f9b34fb)
+	UUID: Phonebook Access Server   (0000112f-0000-1000-8000-00805f9b34fb)
+	SupportedIncludes: local-name
+
+===== PBAP-SDP (0x112f) =====
+	UUID: Phonebook Access Server   (0000112f-0000-1000-8000-00805f9b34fb)
+
+===== Gekoppelte Geräte =====
+Device 10:BD:A3:5C:32:99 MeshCore-DD6DS-Mobile
+
+===== D-Bus Session obex =====
+:1.72                                                                                         4650 obexd           phablet :1.72         user@32011.service -       -
+:1.74                                                                                         4650 obexd           phablet :1.74         user@32011.service -       -
+org.bluez.obex                                                                                4650 obexd           phablet :1.72         user@32011.service -       -
