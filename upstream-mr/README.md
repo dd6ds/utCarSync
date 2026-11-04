@@ -8,7 +8,15 @@ UBports arbeitet auf gitlab.com mit Merge Requests (MR), nicht auf GitHub.
 | **Kommentar** Testbericht + Bitte um 24.04-2.x | bluez packaging MR !8 | `COMMENT-bluez-MR8.md` |
 | **Issue** Hänger bei nicht vertrauenswürdigem Gerät | `ubports/development/core/packaging/bluez` Issues | `ISSUE-pbap-untrusted-device.md` |
 
-## Ablauf
+## Ohne Fork (GitLab verlangt für Forks evtl. Kreditkarte)
+
+1. Issue anlegen: https://gitlab.com/ubports/development/core/lomiri-obex-call-data/-/issues/new
+   Text aus `ISSUE-lomiri-obex-call-data-with-patch.md`, die zwei Dateien aus
+   `../patches/lomiri-obex-call-data/` anhängen
+2. Issue `ISSUE-pbap-untrusted-device.md` bei bluez anlegen
+3. Kommentar `COMMENT-bluez-MR8.md` bei bluez MR !8, Platzhalter durch die Issue-Links ersetzen
+
+## Ablauf mit Fork
 
 1. GitLab-Konto (falls nicht vorhanden) und SSH-Key hinterlegen:
    gitlab.com -> Preferences -> SSH Keys -> Inhalt von `~/.ssh/id_ed25519.pub`.
